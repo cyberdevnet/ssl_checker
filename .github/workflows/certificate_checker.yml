@@ -28,7 +28,10 @@ jobs:
 
       - name: Read summary report
         id: read_summary
-        run: echo "::set-output name=body::$(cat summary_report.txt)"
+        run: |
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          cat summary_report.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Send email (via SMTP)
         uses: dawidd6/action-send-mail@v3
@@ -38,6 +41,6 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: ✅ Certificate Check Completed
-          to: fabriziorollo84@gmail.com, selenerescio@gmail.com
+          to: fabriziorollo84@gmail.com
           from: Certificate ssl checker
           body: ${{ steps.read_summary.outputs.body }}
