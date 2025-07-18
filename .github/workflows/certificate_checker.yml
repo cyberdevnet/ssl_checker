@@ -34,11 +34,8 @@ jobs:
           printf '%s\n' "body<<EOF" >> $GITHUB_OUTPUT
           cat summary_report.txt >> $GITHUB_OUTPUT
           printf '\n' >> $GITHUB_OUTPUT
-          printf '%s\n' "You can download the summary report from here:" >> $GITHUB_OUTPUT
-          printf '%s\n' "https://github.com/cyberdevnet/ssl_checker/blob/main/summary_report.txt" >> $GITHUB_OUTPUT
-          printf '\n' >> $GITHUB_OUTPUT
-          printf '%s\n' "The Excel file used for this report is available here:" >> $GITHUB_OUTPUT
-          printf '%s\n' "https://github.com/cyberdevnet/ssl_checker/blob/main/certificati_iso_date_with_status.xlsx" >> $GITHUB_OUTPUT
+          printf '%s\n' "You can download the summary report from <a href=\"https://github.com/cyberdevnet/ssl_checker/blob/main/summary_report.txt\">here</a>." >> $GITHUB_OUTPUT
+          printf '%s\n' "The Excel file used for this report is available <a href=\"https://github.com/cyberdevnet/ssl_checker/blob/main/certificati_iso_date_with_status.xlsx\">here</a>." >> $GITHUB_OUTPUT
           printf '\nEOF\n' >> $GITHUB_OUTPUT
 
       - uses: dawidd6/action-send-mail@v3
@@ -48,6 +45,7 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: ✅ Certificate Check Completed
-          to: fabriziorollo84@gmail.com, selenerescio@gmail.com
+          to: fabriziorollo84@gmail.com
           from: "Certificate SSL Checker <fabriziorollo84@gmail.com>"
+          content_type: text/html
           body: ${{ steps.read_summary.outputs.body }}
