@@ -34,7 +34,7 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: ✅ Certificate Check Completed
-          to: fabriziorollo84@gmail.com
+          to: fabriziorollo84@gmail.com, selenerescio@gmail.com
           from: Certificate ssl checker
           body: |
             The certificate checker script from github actions has completed successfully
