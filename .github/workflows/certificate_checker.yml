@@ -2,7 +2,7 @@ name: Certificate Checker
 
 on:
   schedule:
-    - cron: "0 8 * * *" # Runs every day at 08:00 UTC
+    - cron: "0 8 * * *"
   workflow_dispatch:
 
 jobs:
@@ -10,31 +10,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
-        run: |
+      - run: |
           python -m pip install --upgrade pip
           pip install openpyxl
 
-      - name: Run certificate checker
-        run: python certificate_checker.py
+      - run: python certificate_checker.py
+
+      - name: Debug summary_report.txt
+        run: |
+          echo "---- summary_report.txt contents ----"
+          cat summary_report.txt || echo "summary_report.txt not found"
+          echo "------------------------------------"
 
       - name: Read summary report
         id: read_summary
         run: |
-          echo "body<<EOF" >> $GITHUB_OUTPUT
+          printf '%s\n' "body<<EOF" >> $GITHUB_OUTPUT
           cat summary_report.txt >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          printf '%s\n' "EOF" >> $GITHUB_OUTPUT
 
-      - name: Send email (via SMTP)
-        uses: dawidd6/action-send-mail@v3
+      - uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 465
@@ -42,5 +43,5 @@ jobs:
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: ✅ Certificate Check Completed
           to: fabriziorollo84@gmail.com
-          from: Certificate ssl checker
+          from: "Certificate SSL Checker <fabriziorollo84@gmail.com>"
           body: ${{ steps.read_summary.outputs.body }}
