@@ -35,6 +35,6 @@ jobs:
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: ✅ Certificate Check Completed
           to: fabriziorollo84@gmail.com
-          from: Certificate Bot <your-email@gmail.com>
+          from: Certificate ssl checker
           body: |
-            The certificate checker script has completed successfully.
+            The certificate checker script from github actions has completed successfully
