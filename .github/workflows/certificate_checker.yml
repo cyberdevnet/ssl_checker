@@ -39,16 +39,19 @@ jobs:
           fi
 
       - name: Commit and push results
-        if: steps.check_changes.outputs.push_required == 'true' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add summary_report.txt certificati_iso_date_with_status.xlsx
+          git commit -m "Update summary and Excel file from workflow run" || echo "Nothing to commit"
+
+      - name: Push changes
+        if: github.ref == 'refs/heads/main'
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GH_PAT }}
           branch: main
-          message: "Update summary and Excel file from workflow run"
-          force: false
-          files: |
-            summary_report.txt
-            certificati_iso_date_with_status.xlsx
 
       - name: Debug summary_report.txt
         run: |
