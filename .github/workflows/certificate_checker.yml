@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write # allow push to repo
+  contents: write # needed to allow push
 
 jobs:
   run-checker:
@@ -33,24 +33,24 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
 
-      - name: Check for file changes
-        id: changes
+      - name: Add and commit if needed
+        id: commit
         run: |
           git add summary_report.txt certificati_iso_date_with_status.xlsx
           if git diff --cached --quiet; then
             echo "push_required=false" >> $GITHUB_OUTPUT
           else
-            echo "push_required=true" >> $GITHUB_OUTPUT
             git commit -m "Update summary and Excel file from workflow run"
+            echo "push_required=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Push changes
-        if: steps.changes.outputs.push_required == 'true'
+      - name: Force push changes
+        if: steps.commit.outputs.push_required == 'true'
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
-          force_with_lease: true
+          force: true
 
       - name: Debug summary_report.txt
         run: |
