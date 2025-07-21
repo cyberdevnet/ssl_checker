@@ -32,9 +32,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
+          git pull origin main --strategy=recursive -X theirs --no-edit || true
           git add summary_report.txt certificati_iso_date_with_status.xlsx
           git commit -m "Update summary and Excel file from workflow run" || echo "Nothing to commit"
-          git push origin main
+          git push origin main || echo "Push failed, possibly due to concurrent changes."
 
       - name: Debug summary_report.txt
         run: |
