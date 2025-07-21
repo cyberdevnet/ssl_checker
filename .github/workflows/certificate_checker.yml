@@ -24,9 +24,12 @@ jobs:
 
       - name: Commit and push results
         if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
           git add summary_report.txt certificati_iso_date_with_status.xlsx
           git commit -m "Update summary and Excel file from workflow run" || echo "Nothing to commit"
           git push origin main
