@@ -5,6 +5,9 @@ on:
     - cron: "0 9 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write # allow push to repo
+
 jobs:
   run-checker:
     runs-on: ubuntu-latest
@@ -12,8 +15,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false # We'll use GH_PAT for pushing
           fetch-depth: 0
+          persist-credentials: false
 
       - uses: actions/setup-python@v5
         with:
@@ -25,29 +28,29 @@ jobs:
 
       - run: python certificate_checker.py
 
-      - name: Check for file changes
-        id: check_changes
+      - name: Configure Git
         run: |
-          git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+      - name: Check for file changes
+        id: changes
+        run: |
           git add summary_report.txt certificati_iso_date_with_status.xlsx
           if git diff --cached --quiet; then
-            echo "No changes detected"
             echo "push_required=false" >> $GITHUB_OUTPUT
           else
-            echo "Changes detected"
             echo "push_required=true" >> $GITHUB_OUTPUT
+            git commit -m "Update summary and Excel file from workflow run"
           fi
 
-      - name: Commit and push changes safely
-        if: steps.check_changes.outputs.push_required == 'true' && github.ref == 'refs/heads/main'
+      - name: Push changes
+        if: steps.changes.outputs.push_required == 'true'
         uses: ad-m/github-push-action@v0.6.0
         with:
-          github_token: ${{ secrets.GH_PAT }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
-          commit_message: "Update summary and Excel file from workflow run"
-          force: false
-          directory: .
+          force_with_lease: true
 
       - name: Debug summary_report.txt
         run: |
