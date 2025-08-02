@@ -1,7 +1,7 @@
 Summary of sites with expiration warnings/errors:
- - expired.badssl.com: ❌ EXPIRED 3764 days ago
- - www.backend.lombardiainforma.regione.lombardia.it: ⚠️ Expires in 15 days
- - www.lombardiainforma.regione.lombardia.it: ⚠️ Expires in 15 days
+ - expired.badssl.com: ❌ EXPIRED 3765 days ago
+ - www.backend.lombardiainforma.regione.lombardia.it: ⚠️ Expires in 14 days
+ - www.lombardiainforma.regione.lombardia.it: ⚠️ Expires in 14 days
 
 Summary of sites with SSL errors:
  - self-signed.badssl.com: verify error:num=18:self-signed certificate
