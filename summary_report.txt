@@ -1,6 +1,6 @@
 Summary of sites with expiration warnings/errors:
- - expired.badssl.com: ❌ EXPIRED 3773 days ago
- - www.lombardiafamiglia.regione.lombardia.it: ⚠️ Expires in 25 days
+ - expired.badssl.com: ❌ EXPIRED 3774 days ago
+ - www.lombardiafamiglia.regione.lombardia.it: ⚠️ Expires in 24 days
 
 Summary of sites with SSL errors:
  - self-signed.badssl.com: verify error:num=18:self-signed certificate
