@@ -1,5 +1,5 @@
 Summary of sites with expiration warnings/errors:
- - expired.badssl.com: ❌ EXPIRED 3798 days ago
+ - expired.badssl.com: ❌ EXPIRED 3799 days ago
 
 Summary of sites with SSL errors:
  - self-signed.badssl.com: verify error:num=18:self-signed certificate
