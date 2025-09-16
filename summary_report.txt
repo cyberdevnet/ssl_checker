@@ -1,6 +1,7 @@
 Summary of sites with expiration warnings/errors:
- - incomplete-chain.badssl.com: ⚠️ Expires in 28 days
- - expired.badssl.com: ❌ EXPIRED 3809 days ago
+ - incomplete-chain.badssl.com: ⚠️ Expires in 27 days
+ - expired.badssl.com: ❌ EXPIRED 3810 days ago
+ - www.difensoreregionale.lombardia.it: ⚠️ Expires in 30 days
 
 Summary of sites with SSL errors:
  - self-signed.badssl.com: verify error:num=18:self-signed certificate
