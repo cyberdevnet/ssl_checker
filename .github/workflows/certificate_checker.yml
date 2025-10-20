@@ -1,9 +1,9 @@
 name: Certificate Checker
 
 on:
-  schedule:
-    - cron: "0 9 * * *"
-  workflow_dispatch:
+  # schedule:
+  #  - cron: "0 9 * * *"
+  workflow_dispatch:         # Keep manual trigger
 
 permissions:
   contents: write # needed to allow push
